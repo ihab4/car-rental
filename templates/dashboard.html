@@ -1,0 +1,431 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+        <!--  Row 1 -->
+        <div class="row">
+          <div class="col-lg-8 d-flex align-items-strech">
+            <div class="card w-100">
+              <div class="card-body">
+                <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                  <div class="mb-3 mb-sm-0">
+                    <h5 class="card-title fw-semibold">Sales Overview</h5>
+                  </div>
+                  <div>
+                    <select class="form-select">
+                      <option value="1">March 2025</option>
+                      <option value="2">April 2025</option>
+                      <option value="3">May 2025</option>
+                      <option value="4">June 2025</option>
+                    </select>
+                  </div>
+                  
+                </div>
+                <div id="chart"></div>
+                
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="row">
+              <div class="col-lg-12">
+                <!-- Yearly Breakup -->
+                <div class="card overflow-hidden">
+                  <div class="card-body p-4">
+                    <h5 class="card-title mb-9 fw-semibold">Total Cars</h5>
+                    <div class="row align-items-center">
+                      <div class="col-7">
+                        <h4 class="fw-semibold mb-3">{{ total }}</h4>
+                        
+                        
+                      </div>
+                      <div class="col-5">
+                        <div class="d-flex justify-content-center">
+                          <div id="breakup"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <!-- Monthly Earnings -->
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row alig n-items-start">
+                      <div class="col-8">
+                        <h5 class="card-title mb-9 fw-semibold"> Available Cars </h5>
+                        <h4 class="fw-semibold mb-3">{{ available }}</h4>
+                        
+                      </div>
+                      
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <!-- Monthly Earnings -->
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row alig n-items-start">
+                      <div class="col-8">
+                        <h5 class="card-title mb-9 fw-semibold"> Rented Cars </h5>
+                        <h4 class="fw-semibold mb-3">{{ rented }}</h4>
+                        
+                      </div>
+                      
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
+          <div class="col-lg-12 d-flex align-items-strech">
+            <div class="card w-100">
+              <div class="card-body">
+                <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                  <div class="mb-3 mb-sm-0">
+                    <h5 class="card-title fw-semibold">Rentals timeline</h5>
+                  </div>
+                  <div style="display:flex;">
+                    <select id="monthSelect" class="form-select">
+                      <option value="all">All</option>
+                      <option value="01">January</option>
+                      <option value="02">February</option>
+                      <option value="03">March</option>
+                      <option value="04">April</option>
+                      <option value="05">May</option>
+                      <option value="06">June</option>
+                      <option value="07">July</option>
+                      <option value="08">Augaust</option>
+                      <option value="09">September</option>
+                      <option value="10">October</option>
+                      <option value="11">November</option>
+                      <option value="12">December</option>
+                    </select>
+                    <select id="yearSelect" class="form-select">
+                      <option value="all">All</option>
+                      <option value="2025">2025</option>
+                      <option value="2024">2024</option>
+                      <option value="2023">2023</option>
+                    </select>
+                  </div>
+                </div>
+                <div id="timeline" style="height:400px; with:900px;"></div>
+                
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-lg-12 d-flex align-items-stretch">
+            <div class="card w-100">
+              <div class="card-body">
+                <div class="d-sm-flex d-block align-items-center justify-content-between mb-7">
+                  <div class="mb-3 mb-sm-0">
+                    <h4 class="card-title fw-semibold">Clients Overview</h4>
+                    <p class="card-subtitle">Recent Clients</p>
+                  </div>
+                  
+                </div>
+                <div class="table-responsive">
+                  <table class="table align-middle text-nowrap mb-0">
+                    <thead>
+                      <tr class="text-muted fw-semibold">
+                        <th scope="col" class="ps-0">Name</th>
+                        <th scope="col">Car</th>
+                        <th scope="col">Periode</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Total price</th>
+                      </tr>
+                    </thead>
+                    <tbody class="border-top">
+                      {% for over in overview %}
+                      <tr>
+                        <td class="ps-0">
+                          <div class="d-flex align-items-center">
+                            
+                            <div>
+                              <h6 class="fw-semibold mb-1">{{ over.name }}</h6>
+                              
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="mb-0 fs-3">{{ over.car }}</p>
+                        </td>
+                        <td>
+                          <p class="fs-3 text-dark mb-0">{{ over.days }}</p>
+                        </td>
+                        <td>
+                          <p class="fs-3 text-dark mb-0">{{ over.phone }}</p>
+                        </td>
+                        <td>
+                          <p class="fs-3 text-dark mb-0">{{ over.total_price }}</p>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="col-sm-6 col-xl-3">
+            <div class="card overflow-hidden rounded-2">
+              <div class="position-relative">
+                <a href="javascript:void(0)"><img src="{% static 'images/products/s4.jpg' %}"                    class="card-img-top rounded-0" alt="..."></a>
+                <a href="javascript:void(0)"
+                  class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
+                    class="ti ti-basket fs-4"></i></a>
+              </div>
+              <div class="card-body pt-3 p-4">
+                <h6 class="fw-semibold fs-4">Boat Headphone</h6>
+                <div class="d-flex align-items-center justify-content-between">
+                  <h6 class="fw-semibold fs-4 mb-0">$50 <span
+                      class="ms-2 fw-normal text-muted fs-3"><del>$65</del></span></h6>
+                  <ul class="list-unstyled d-flex align-items-center mb-0">
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="card overflow-hidden rounded-2">
+              <div class="position-relative">
+                <a href="javascript:void(0)"><img src="{% static 'images/products/s5.jpg' %}"                    class="card-img-top rounded-0" alt="..."></a>
+                <a href="javascript:void(0)"
+                  class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
+                    class="ti ti-basket fs-4"></i></a>
+              </div>
+              <div class="card-body pt-3 p-4">
+                <h6 class="fw-semibold fs-4">MacBook Air Pro</h6>
+                <div class="d-flex align-items-center justify-content-between">
+                  <h6 class="fw-semibold fs-4 mb-0">$650 <span
+                      class="ms-2 fw-normal text-muted fs-3"><del>$900</del></span></h6>
+                  <ul class="list-unstyled d-flex align-items-center mb-0">
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="card overflow-hidden rounded-2">
+              <div class="position-relative">
+                <a href="javascript:void(0)"><img src="{% static 'images/products/s7.jpg' %}"                    class="card-img-top rounded-0" alt="..."></a>
+                <a href="javascript:void(0)"
+                  class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
+                    class="ti ti-basket fs-4"></i></a>
+              </div>
+              <div class="card-body pt-3 p-4">
+                <h6 class="fw-semibold fs-4">Red Valvet Dress</h6>
+                <div class="d-flex align-items-center justify-content-between">
+                  <h6 class="fw-semibold fs-4 mb-0">$150 <span
+                      class="ms-2 fw-normal text-muted fs-3"><del>$200</del></span></h6>
+                  <ul class="list-unstyled d-flex align-items-center mb-0">
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="card overflow-hidden rounded-2">
+              <div class="position-relative">
+                <a href="javascript:void(0)"><img src="{% static 'images/products/s11.jpg' %}"                    class="card-img-top rounded-0" alt="..."></a>
+                <a href="javascript:void(0)"
+                  class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
+                    class="ti ti-basket fs-4"></i></a>
+              </div>
+              <div class="card-body pt-3 p-4">
+                <h6 class="fw-semibold fs-4">Cute Soft Teddybear</h6>
+                <div class="d-flex align-items-center justify-content-between">
+                  <h6 class="fw-semibold fs-4 mb-0">$285 <span
+                      class="ms-2 fw-normal text-muted fs-3"><del>$345</del></span></h6>
+                  <ul class="list-unstyled d-flex align-items-center mb-0">
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                    <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div> {% endcomment %}
+        </div>
+
+        {% comment %} <div class="py-6 px-6 text-center">
+          <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
+              class="pe-1 text-primary text-decoration-underline">AdminMart.com</a></p>
+        </div> {% endcomment %}
+   
+        <script>
+          var ctx = document.getElementById('rentalChart').getContext('2d');
+          var rentalChart = new Chart(ctx, {
+              type: 'bar',  // You can change this to 'line', 'pie', etc.
+              data: {
+                  labels: {{ labels|safe }},  // The model names from Django context
+                  datasets: [{
+                      label: 'Number of Rentals per Car Model',
+                      data: {{ data|safe }},  // The rental count from Django context
+                      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                      borderColor: 'rgba(54, 162, 235, 1)',
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      y: {
+                          beginAtZero: true
+                      }
+                  }
+              }
+          });
+      </script>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      {% comment %} <script>
+        google.charts.load('current', { packages: ['timeline'] });
+        google.charts.setOnLoadCallback(initChart);
+    
+        const rentalData = {{ rental_data|safe }};
+    
+        function initChart() {
+          const monthselect = document.getElementById('monthSelect');
+          const yearselect = document.getElementById('yearSelect');
+    
+          monthselect.addEventListener('change', filterAndDraw);
+          yearselect.addEventListener('change', filterAndDraw);
+    
+          drawChart(rentalData);
+        }
+    
+        function filterAndDraw() {
+          const valmonth = document.getElementById('monthSelect').value;
+          const valyear = document.getElementById('yearSelect').value;
+    
+          if (valmonth === "all" && valyear === "all") {
+            drawChart(rentalData);
+          } else {
+            const filtered = rentalData.filter(item => {
+              const start = new Date(item.start);
+              const monthMatch = valmonth === "all" || (start.getMonth() + 1) === parseInt(valmonth);
+              const yearMatch = valyear === "all" || start.getFullYear() === parseInt(valyear);
+              return monthMatch && yearMatch;
+            });
+            drawChart(filtered);
+          }
+        }
+    
+        function drawChart(data) {
+          const container = document.getElementById('timeline');
+          const chart = new google.visualization.Timeline(container);
+          const dataTable = new google.visualization.DataTable();
+    
+          dataTable.addColumn({ type: 'string', id: 'Car' });
+          dataTable.addColumn({ type: 'string', id: 'Client' });
+          dataTable.addColumn({ type: 'date', id: 'Start' });
+          dataTable.addColumn({ type: 'date', id: 'End' });
+    
+          const rows = data.map(item => [
+            item.car,
+            item.client,
+            new Date(item.start),
+            new Date(item.end)
+          ]);
+    
+          dataTable.addRows(rows);
+          chart.draw(dataTable);
+        }
+      </script> {% endcomment %}
+
+      <script>
+        google.charts.load('current', { packages: ['timeline'] });
+        google.charts.setOnLoadCallback(initChart);
+      
+        const rentalData = {{ rental_data|safe }};
+      
+        function initChart() {
+          const monthSelect = document.getElementById('monthSelect');
+          const yearSelect = document.getElementById('yearSelect');
+      
+          // Set defaults
+          const today = new Date();
+          const currentMonth = String(today.getMonth() + 1).padStart(2, '0');
+          const currentYear = String(today.getFullYear());
+      
+          monthSelect.value = currentMonth;
+          yearSelect.value = currentYear;
+      
+          // Initial filtered draw
+          filterAndDrawChart();
+      
+          // Event listeners
+          monthSelect.addEventListener('change', filterAndDrawChart);
+          yearSelect.addEventListener('change', filterAndDrawChart);
+        }
+      
+        function filterAndDrawChart() {
+          const month = document.getElementById('monthSelect').value;
+          const year = document.getElementById('yearSelect').value;
+      
+          let filtered = rentalData;
+      
+          if (month !== "all" || year !== "all") {
+            filtered = rentalData.filter(item => {
+              const start = new Date(item.start);
+              return (month === "all" || String(start.getMonth() + 1).padStart(2, '0') === month) &&
+                     (year === "all" || String(start.getFullYear()) === year);
+            });
+          }
+      
+          drawChart(filtered);
+        }
+      
+        function drawChart(data) {
+          const container = document.getElementById('timeline');
+          const chart = new google.visualization.Timeline(container);
+          const dataTable = new google.visualization.DataTable();
+      
+          dataTable.addColumn({ type: 'string', id: 'Car' });
+          dataTable.addColumn({ type: 'string', id: 'Client' });
+          dataTable.addColumn({ type: 'date', id: 'Start' });
+          dataTable.addColumn({ type: 'date', id: 'End' });
+      
+          const rows = data.map(item => [
+            item.car,
+            item.client,
+            new Date(item.start),
+            new Date(item.end)
+          ]);
+      
+          dataTable.addRows(rows);
+          chart.draw(dataTable);
+        }
+      </script>
+      
+    
+{% endblock %}

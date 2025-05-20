@@ -1,0 +1,36 @@
+{% extends 'base.html' %} 
+{% block content %} 
+{% load static %}
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      
+    {% for car in cars %}
+      <div class="col-md-4">
+        <div class="card">
+          <img
+            src="media/{{ car.image }}"
+            class="card-img-top"
+            alt="{{ car.Brand }} {{ car.model }}"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
+            <p>{{ car.plate_number }}</p>
+            <p>{{ car.price_per_day }} DH per day</p>
+            
+            <a href="#" class="btn btn-primary">Rent</a>
+            <a href="/car/{{ car.id }}" value="edit" class="btn btn-primary">Edit</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      
+    </div>
+  </div>
+</div>
+
+  
+
+  
+{% endblock %}

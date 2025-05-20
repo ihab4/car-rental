@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="card">
+      <div class="card-body">
+        <form method="GET" class="d-flex mb-3" role="search">
+          <input class="form-control me-2" type="search" name="q" placeholder="Search clients...">
+          <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+        <div class="col-lg-12 d-flex align-items-stretch">
+          <div class="card w-100">
+            <div class="card-body">
+              <div class="d-sm-flex d-block align-items-center justify-content-between mb-7">
+                <div class="mb-3 mb-sm-0">
+                  <h4 class="card-title fw-semibold">Clients Overview</h4>
+                  <p class="card-subtitle">Recent Clients</p>
+                  
+                </div>
+
+                {% if query %}
+                <a class="btn btn-outline-primary" href="/clients">
+                  All Client
+                </a>
+                {% endif %}
+
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addClientModal">
+                  Add Client
+                </button>
+
+              </div>
+              <div class="table-responsive">
+                <table class="table align-middle text-nowrap mb-0">
+                  <thead>
+                    <tr class="text-muted fw-semibold">
+                      <th scope="col" class="ps-0">First Name</th>
+                      <th scope="col">Last Name</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">cin</th>
+                      <th scope="col">permis</th>
+                      <th scope="col">details</th>
+                    </tr>
+                  </thead>
+                  <tbody class="border-top">
+                    {% for client in clients %}
+                    <tr>
+                      <td class="ps-0">
+                        <div class="d-flex align-items-center">
+                          
+                          <div>
+                            <h6 class="fw-semibold mb-1">{{ client.first_name }}</h6>
+                            
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="mb-0 fs-3">{{ client.last_name }}</p>
+                      </td>
+                      <td>
+
+                        <p class="fs-3 text-dark mb-0">{{ client.phone }}</p>
+                      </td>
+                      <td>
+                        <p class="fs-3 text-dark mb-0"><a href="http://127.0.0.1:8000/media/{{ client.cin }}">cin</a></p>
+                      </td>
+                      <td>
+                        <p class="fs-3 text-dark mb-0"><a href="http://127.0.0.1:8000/media/{{ client.driver_licence }}">permis</a></p>
+                      </td>
+                      <td>
+                        <a href="/client/{{ client.id }}" class="fs-3 text-dark mb-0">Edit</a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+
+      </div>
+    </div>
+
+
+
+
+    <!-- Modal -->
+<div class="modal fade" id="addClientModal" tabindex="-1" aria-labelledby="addClientModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="POST" id="add-client-form">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addClientModalLabel">New Client</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" required>
+          </div>
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="clientPhone" name="lastName" required>
+          </div>
+
+          <!-- Add other fields as needed -->
+          <div class="mb-3">
+            <label for="clientPhone" class="form-label">Phone</label>
+            <input type="text" class="form-control" id="clientPhone" name="phone" required>
+          </div>
+          <div class="mb-3">
+            <label for="cin" class="form-label">CIN</label>
+            <input type="file" class="form-control" id="cin" name="cin" required>
+          </div>
+          <div class="mb-3">
+            <label for="permis" class="form-label">Permis</label>
+            <input type="file" class="form-control" id="permis" name="permis" required>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.getElementById('add-client-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+  
+    const form = e.target;
+    const formData = new FormData(form);
+  
+    fetch("{% url 'add_client_ajax' %}", {
+      method: "POST",
+      headers: {
+        'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+      },
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert("Client added!");
+        form.reset();
+        const modal = bootstrap.Modal.getInstance(document.getElementById('addClientModal'));
+        modal.hide();
+        
+        // Optional: update client dropdown
+        window.location.reload();
+      } else {
+        alert("Error: " + data.error);
+      }
+    })
+    .catch(error => console.error("Error:", error));
+  });
+  </script>
+  
+
+
+{% endblock %}

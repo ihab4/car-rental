@@ -1,0 +1,236 @@
+<!-- Sidebar Start -->
+ {% load static %}
+<aside class="left-sidebar" style="top: 10px;">
+    <!-- Sidebar scroll-->
+    <div>
+      <div class="brand-logo d-flex align-items-center justify-content-between">
+        {% comment %} <a href="/" class="text-nowrap logo-img">
+          <img src="{% static 'images/logos/logo.svg' %}" alt="" />
+        </a> {% endcomment %}
+        <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+          <i class="ti ti-x fs-6"></i>
+        </div>
+      </div>
+      <!-- Sidebar navigation-->
+      <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+        <ul id="sidebarnav">
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Home</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/" aria-expanded="false">
+              <i class="ti ti-atom"></i>
+              <span class="hide-menu">Dashboard</span>
+            </a>
+          </li>
+          <!-- ---------------------------------- -->
+          <!-- Dashboard -->
+          <!-- ---------------------------------- -->
+          
+          <li class="sidebar-item">
+            <a class="sidebar-link justify-content-between has-arrow" href="javascript:void(0)" aria-expanded="false">
+              <div class="d-flex align-items-center gap-3">
+                <span class="d-flex">
+                  <i class="ti ti-car"></i>
+                </span>
+                <span class="hide-menu">Vehicles</span>
+              </div>
+            </a>
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a class="sidebar-link justify-content-between"
+                  href="/cars">
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="round-16 d-flex align-items-center justify-content-center">
+                      <i class="ti ti-circle"></i>
+                    </div>
+                    <span class="hide-menu">All Vehicles</span>
+                  </div>
+
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link justify-content-between" 
+                  href="/available_cars">
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="round-16 d-flex align-items-center justify-content-center">
+                      <i class="ti ti-circle"></i>
+                    </div>
+                    <span class="hide-menu">Available Vehicles</span>
+                  </div>
+
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link justify-content-between" target="_blank"
+                  href="https://bootstrapdemos.adminmart.com/modernize/dist/main/frontend-blogpage.html">
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="round-16 d-flex align-items-center justify-content-center">
+                      <i class="ti ti-circle"></i>
+                    </div>
+                    <span class="hide-menu">Maintenance</span>
+                  </div>
+
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link justify-content-between" 
+                  href="/add_car">
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="round-16 d-flex align-items-center justify-content-center">
+                      <i class="ti ti-circle"></i>
+                    </div>
+                    <span class="hide-menu">Add a Car</span>
+                  </div>
+
+                </a>
+              </li>
+              
+            </ul>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/booking.html" aria-expanded="false">
+              <i class="ti ti-calendar"></i>
+              <span class="hide-menu">Booking</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/clients" aria-expanded="false">
+              <i class="ti ti-users"></i>
+              <span class="hide-menu">Clients</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/rentals" aria-expanded="false">
+              <i class="ti ti-clipboard-list"></i>
+              <span class="hide-menu">Rentals</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/" aria-expanded="false">
+              <i class="ti ti-file-text"></i>
+              <span class="hide-menu">Invoices</span>
+            </a>
+          </li>
+
+
+
+          
+
+
+
+
+
+
+
+          <li>
+            <span class="sidebar-divider lg"></span>
+          </li>
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Management</span>
+          </li>
+          
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/" aria-expanded="false">
+              <i class="ti ti-user"></i>
+              <span class="hide-menu">Users</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/" aria-expanded="false">
+              <i class="ti ti-settings"></i>
+              <span class="hide-menu">Settings</span>
+            </a>
+          </li>
+
+        
+         
+        
+          
+        
+
+         
+               
+
+          <li>
+            <span class="sidebar-divider lg"></span>
+          </li>
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Analytics & Reports</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+              <i class="ti ti-chart-bar"></i>
+              <span class="hide-menu">Reports</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+              <i class="ti ti-search"></i>
+              <span class="hide-menu">Activity Log</span>
+            </a>
+          </li>    
+
+
+          <li>
+            <span class="sidebar-divider lg"></span>
+          </li>
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Auth</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+              <i class="ti ti-login"></i>
+              <span class="hide-menu">Login</span>
+            </a>
+          </li>
+          
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+              <i class="ti ti-user-plus"></i>
+              <span class="hide-menu">Register</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+              <i class="ti ti-logout"></i>
+              <span class="hide-menu">Logout</span>
+            </a>
+          </li>
+          
+          
+
+          <li>
+            <span class="sidebar-divider lg"></span>
+          </li>
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Extra</span>
+          </li>
+          
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
+              <i class="ti ti-archive"></i>
+              <span class="hide-menu">Tabler Icon</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
+              <i class="ti ti-file"></i>
+              <span class="hide-menu">Sample Page</span>
+            </a>
+          </li>
+        </ul>
+        
+      </nav>
+      <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+  </aside>
+  <!--  Sidebar End -->

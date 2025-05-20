@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+          <div class="card">
+            <div class="card-body">
+              <h2 class="card-title fw-semibold mb-4">{{ car }}</h2>
+              <form method="POST">
+                {% csrf_token %}
+                
+                <label for="plate-select" class="form-label">enter plate number</label>
+                <div style="display: flex; gap: 5px;">
+                    <input type="text" maxlength="8" pattern="(\d+|[wW]{2}\d+)" placeholder="0000 or WW12345" required class="form-control" name="num_part" value="{{ plate1 }}">
+                    <input type="text" maxlength="1" pattern="[A-Za-z]" placeholder="A" class="form-control" name="letter_part" value="{{ plate2 }}">
+                    <input type="text" maxlength="2" pattern="\d+" placeholder="0" class="form-control" name="region_part" value="{{ plate3 }}">
+                  </div>
+                  <small>Enter Moroccan license plate: e.g. 1234-A-1 / WW1234</small>
+                
+
+                <div class="mb-3">
+                  <label for="year" class="form-label">Year</label>
+                  <input type="number" name="year" value="{{ car.year }}" min="2019" max="2030" step="1" placeholder="e.g. 2025" required class="form-control" disabled>
+
+                </div>
+                
+                
+                <div class="mb-3">
+                  <label for="dropoff-date" class="form-label">Price</label>
+                  <input type="text" class="form-control" id="price" name="price" value="{{ car.price_per_day }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+              </form>
+         
+                
+            </div>
+          </div>
+  
+{% endblock %}
+ 

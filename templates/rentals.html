@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="card">
+      <div class="card-body">
+        
+        <div class="col-lg-12 d-flex align-items-stretch">
+          <div class="card w-100">
+            <div class="card-body">
+              <div class="d-sm-flex d-block align-items-center justify-content-between mb-7">
+                <div class="mb-3 mb-sm-0">
+                  <h4 class="card-title fw-semibold">Clients Overview</h4>
+                  <p class="card-subtitle">Recent Clients</p>
+                  
+                </div>    
+
+              </div>
+              <div class="table-responsive">
+                <table class="table align-middle text-nowrap mb-0">
+                  <thead>
+                    <tr class="text-muted fw-semibold">
+                      <th scope="col" class="ps-0">Full Name</th>
+                      <th scope="col">Start date</th>
+                      <th scope="col">end date</th>
+                      <th scope="col">days</th>
+                      <th scope="col">price per day</th>
+                      <th scope="col">total price</th>
+                      <th scope="col">invoice</th>
+                    </tr>
+                  </thead>
+                  <tbody class="border-top">
+                    {% for rental in rentals %}
+                    <tr>
+                      <td class="ps-0">
+                        <div class="d-flex align-items-center">
+                          
+                          <div>
+                            <h6 class="fw-semibold mb-1">{{ rental.client }}</h6>
+                            
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="mb-0 fs-3">{{ rental.start_date }}</p>
+                      </td>
+                      <td>
+
+                        <p class="fs-3 text-dark mb-0">{{ rental.end_date }}</p>
+                      </td>
+                      <td>
+                        <p class="fs-3 text-dark mb-0">{{ rental.days }}</p>
+                      </td>
+                      <td>
+                        <p class="fs-3 text-dark mb-0">{{ rental.price_per_day }} DH</p>
+                      </td>
+                      <td>
+                        <p class="fs-3 text-dark mb-0">{{ rental.total_price }} DH</p>
+                      </td>
+                      <td>
+                        <a href="/invoice/{{ rental.id }}" class="fs-3 text-dark mb-0">invoice</a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+
+      </div>
+    </div>
+  
+
+
+{% endblock %}

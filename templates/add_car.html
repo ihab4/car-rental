@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+      
+      <h5 class="card-title fw-semibold mb-4">Car</h5>
+      <div class="card mb-0">
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+            <fieldset>
+              <legend>Add a new Car</legend>
+              <!-- Brand Select -->
+              <div class="mb-3">
+                <label for="brand-select" class="form-label">select a brand</label>
+                <select id="brand-select" class="form-select" name="brand" required>
+                  <option value="">Select brand</option>
+                  {% for brand in brands %}
+                    <option value="{{ brand.id }}">{{ brand }}</option>
+                  {% endfor %}
+                </select>
+
+                <label for="model-select" class="form-label">select a model</label>
+                <!-- Model Select (Initially empty) -->
+                <select id="model-select" class="form-select" name="model" required disabled>
+                  <option value="">Select model</option>
+                </select>
+                <label for="plate-select" class="form-label">enter plate number</label>
+                <div style="display: flex; gap: 5px;">
+                    <input type="text" maxlength="8" pattern="(\d+|[wW]{2}\d+)" placeholder="0000 or WW12345" required class="form-control" name="num_part">
+                    <input type="text" maxlength="1" pattern="[A-Za-z]" placeholder="A" class="form-control" name="letter_part">
+                    <input type="text" maxlength="2" pattern="\d+" placeholder="0" class="form-control" name="region_part">
+                  </div>
+                  <small>Enter Moroccan license plate: e.g. 1234-A-1 / WW1234</small>
+                
+
+                <div class="mb-3">
+                  <label for="year" class="form-label">Year</label>
+                  <input type="number" name="year" min="2019" max="2030" step="1" placeholder="e.g. 2025" required class="form-control">
+
+                </div>
+                
+                
+                <div class="mb-3">
+                  <label for="dropoff-date" class="form-label">Price</label>
+                  <input type="text" class="form-control" id="price" name="price" required>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="file" class="form-control" id="image" name="image" required>
+                </div>
+              </div>
+         
+             
+              
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>     
+    </div>     
+  </div>
+
+  <script>
+    document.getElementById('brand-select').addEventListener('change', function() {
+      const brandId = this.value;
+      const modelSelect = document.getElementById('model-select');
+      modelSelect.disabled = true;
+      modelSelect.innerHTML = '<option>Loading...</option>';
+    
+      fetch(`/get-models/${brandId}/`)
+        .then(response => response.json())
+        .then(data => {
+          modelSelect.innerHTML = '<option value="">Select model</option>';
+          data.models.forEach(model => {
+            modelSelect.innerHTML += `<option value="${model.id}">${model.model_name}</option>`;
+          });
+          modelSelect.disabled = false;
+        });
+    });
+
+    </script>
+{% endblock %}

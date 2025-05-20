@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rental Timeline</title>
+    {% comment %} <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> {% endcomment %}
+    
+</head>
+<body>
+  <select id="monthSelect" class="form-select mb-3">
+    <option value="all">All</option>
+    <option value="01">January</option>
+    <option value="02">February</option>
+    <option value="03">March</option>
+    <option value="04">April</option>
+    <option value="05">May</option>
+    <option value="06">June</option>
+    <option value="07">July</option>
+    <option value="08">Augaust</option>
+    <option value="09">September</option>
+    <option value="10">October</option>
+    <option value="11">November</option>
+    <option value="12">December</option>
+  </select>
+  <select id="yearSelect" class="form-select mb-3">
+    <option value="all">All</option>
+    <option value="2025">2025</option>
+    <option value="2024">2024</option>
+    <option value="2023">2023</option>
+  </select>
+  
+  <div id="timeline" style="height: 500px;"></div>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
+    google.charts.load('current', { packages: ['timeline'] });
+    google.charts.setOnLoadCallback(initChart);
+
+    const rentalData = {{ rental_data|safe }};
+
+    function initChart() {
+      const monthselect = document.getElementById('monthSelect');
+      const yearselect = document.getElementById('yearSelect');
+
+      monthselect.addEventListener('change', filterAndDraw);
+      yearselect.addEventListener('change', filterAndDraw);
+
+      drawChart(rentalData);
+    }
+
+    function filterAndDraw() {
+      const valmonth = document.getElementById('monthSelect').value;
+      const valyear = document.getElementById('yearSelect').value;
+
+      if (valmonth === "all" && valyear === "all") {
+        drawChart(rentalData);
+      } else {
+        const filtered = rentalData.filter(item => {
+          const start = new Date(item.start);
+          const monthMatch = valmonth === "all" || (start.getMonth() + 1) === parseInt(valmonth);
+          const yearMatch = valyear === "all" || start.getFullYear() === parseInt(valyear);
+          return monthMatch && yearMatch;
+        });
+        drawChart(filtered);
+      }
+    }
+
+    function drawChart(data) {
+      const container = document.getElementById('timeline');
+      const chart = new google.visualization.Timeline(container);
+      const dataTable = new google.visualization.DataTable();
+
+      dataTable.addColumn({ type: 'string', id: 'Car' });
+      dataTable.addColumn({ type: 'string', id: 'Client' });
+      dataTable.addColumn({ type: 'date', id: 'Start' });
+      dataTable.addColumn({ type: 'date', id: 'End' });
+
+      const rows = data.map(item => [
+        item.car,
+        item.client,
+        new Date(item.start),
+        new Date(item.end)
+      ]);
+
+      dataTable.addRows(rows);
+      chart.draw(dataTable);
+    }
+  </script>
+
+    
+</body>
+</html>

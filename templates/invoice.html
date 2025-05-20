@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental Invoice</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 20px;
+        }
+        
+        .company-info h1 {
+            color: #3498db;
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .invoice-info {
+            text-align: right;
+        }
+        
+        .invoice-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .invoice-number {
+            font-weight: bold;
+        }
+        
+        .client-info, .rental-info {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .info-box {
+            width: 48%;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+            text-align: left;
+            padding: 12px;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .total-section {
+            text-align: right;
+            margin-bottom: 30px;
+        }
+        
+        .total-line {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        
+        .grand-total {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        
+        .notes {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-header">
+        <div class="company-info">
+            <h1>Car Rentals</h1>
+            <p>123 Rental Avenue<br>
+            Cityville, ST 12345<br>
+            Phone: (555) 123-4567<br>
+            Email: info@driveeasy.com</p>
+        </div>
+        <div class="invoice-info">
+            <div class="invoice-title">INVOICE</div>
+            <p>Invoice #: <span class="invoice-number">RE-2023-0567</span></p>
+            <p>Date: <span id="invoice-date">October 15, 2023</span></p>
+            <p>Due Date: <span id="due-date">October 22, 2023</span></p>
+        </div>
+    </div>
+    
+    <div class="client-info">
+        <div class="info-box">
+            <h3>Customer Information</h3>
+            <p><strong>Name:</strong> {{ rental.client }}</p>
+            <p><strong>Address:</strong> 123 Main Street, Apt 4B<br>
+            Townsville, ST 54321</p>
+            <p><strong>Phone:</strong> {{ rental.client.phone }}</p>
+            <p><strong>Email:</strong> john.customer@example.com</p>
+            <p><strong>DL Number:</strong> DL12345678</p>
+        </div>
+        
+        <div class="info-box">
+            <h3>Rental Information</h3>
+            <p><strong>Reservation #:</strong> RES-2023-0456</p>
+            <p><strong>Pick-up Date:</strong> October 10, 2023 10:00 AM</p>
+            <p><strong>Return Date:</strong> October 15, 2023 3:00 PM</p>
+            <p><strong>Pick-up Location:</strong> Cityville Airport</p>
+            <p><strong>Return Location:</strong> Cityville Downtown</p>
+        </div>
+    </div>
+    
+    <div class="rental-info">
+        <div class="info-box">
+            <h3>Vehicle Information</h3>
+            <p><strong>Make/Model:</strong> Toyota Camry 2022</p>
+            <p><strong>Vehicle Class:</strong> Standard Sedan</p>
+            <p><strong>License Plate:</strong> ST-AB1234</p>
+            <p><strong>VIN:</strong> 4T1BF1FKXEU123456</p>
+            <p><strong>Odometer Out:</strong> 12,345 miles</p>
+            <p><strong>Odometer In:</strong> 12,845 miles</p>
+            <p><strong>Miles Driven:</strong> 500 miles</p>
+        </div>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Rate</th>
+                <th>Days/Qty</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Daily Rental Rate</td>
+                <td>$49.99/day</td>
+                <td>5 days</td>
+                <td>$249.95</td>
+            </tr>
+            <tr>
+                <td>Mileage Charge (over 100 miles/day)</td>
+                <td>$0.25/mile</td>
+                <td>0 miles</td>
+                <td>$0.00</td>
+            </tr>
+            <tr>
+                <td>Collision Damage Waiver</td>
+                <td>$14.99/day</td>
+                <td>5 days</td>
+                <td>$74.95</td>
+            </tr>
+            <tr>
+                <td>Additional Driver Fee</td>
+                <td>$9.99/day</td>
+                <td>5 days</td>
+                <td>$49.95</td>
+            </tr>
+            <tr>
+                <td>Airport Surcharge</td>
+                <td>$25.00</td>
+                <td>1</td>
+                <td>$25.00</td>
+            </tr>
+            <tr>
+                <td>Fuel Charge (tank not full)</td>
+                <td>$35.00</td>
+                <td>1</td>
+                <td>$35.00</td>
+            </tr>
+            <tr>
+                <td>State Tax</td>
+                <td>6.5%</td>
+                <td></td>
+                <td>$31.59</td>
+            </tr>
+            <tr>
+                <td>Local Tax</td>
+                <td>2.0%</td>
+                <td></td>
+                <td>$9.72</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="total-section">
+        <div class="total-line"><strong>Subtotal:</strong> $434.85</div>
+        <div class="total-line"><strong>Taxes:</strong> $41.31</div>
+        <div class="grand-total">Total: $476.16</div>
+        <div class="total-line"><strong>Amount Paid:</strong> $100.00</div>
+        <div class="grand-total">Balance Due: $376.16</div>
+    </div>
+    
+    <div class="notes">
+        <h3>Payment & Return Notes</h3>
+        <p>Payment due upon receipt. Late payments subject to 1.5% monthly interest.</p>
+        <p>Vehicle returned with minor scratch on rear bumper (documented).</p>
+        <p>Fuel level at return: 3/4 tank (charged for missing 1/4 tank).</p>
+    </div>
+    
+    <div class="footer">
+        <p>Thank you for choosing DriveEasy Rentals!</p>
+        <p>For any questions regarding this invoice, please contact our billing department at billing@driveeasy.com or call (555) 123-4567 ext. 2</p>
+        <p>DriveEasy Rentals | www.driveeasy.com</p>
+    </div>
+
+</body>
+</html>

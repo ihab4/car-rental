@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <div class="card">
+      <div class="card-body">
+        
+        <h5 class="card-title fw-semibold mb-4">Car</h5>
+        <div class="card mb-0">
+          <div class="card-body">
+            <form method="POST">
+              {% csrf_token %}
+              <fieldset>
+                <legend>Choose car</legend>
+                <!-- Brand Select -->
+                <div class="mb-3">
+                  <label for="brand-select" class="form-label">select a brand</label>
+                  <select id="brand-select" class="form-select" name="brand" required>
+                    <option value="">Select brand</option>
+                    {% for brand in brands %}
+                      <option value="{{ brand.id }}">{{ brand }}</option>
+                    {% endfor %}
+                  </select>
+                  {% comment %} {{ form.brand.label_tag }} {% endcomment %}
+                  {% comment %} {{ form.brand }} {% endcomment %}
+                  <label for="model-select" class="form-label">select a model</label>
+                  <!-- Model Select (Initially empty) -->
+                  <select id="model-select" class="form-select" name="model" required disabled>
+                    <option value="">Select model</option>
+                  </select>
+                  <label for="plate-select" class="form-label">select plate number</label>
+                  <!-- Model Select (Initially empty) -->
+                  <select id="plate-select" class="form-select" name="plate" required disabled>
+                    <option value="">Select plate number</option>
+                  </select>
+
+                  <div class="mb-3">
+                    <label for="pickup-date" class="form-label">Pickup Date</label>
+                    <input type="date" class="form-control" id="pickup-date" name="pickup_date" required>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="dropoff-date" class="form-label">Drop-off Date</label>
+                    <input type="date" class="form-control" id="dropoff-date" name="dropoff_date" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="dropoff-date" class="form-label">Price</label>
+                    <input type="text" class="form-control" id="price" name="price">
+                  </div>
+                </div>
+
+                <legend>Client</legend>
+
+                <div class="mb-3">
+                  <label for="client-type" class="form-label">New clients / Client</label>
+                  <!-- Model Select (Initially empty) -->
+                  <select id="client-type" class="form-select" name="client_type" required>
+                    <option value="new">New Client</option>
+                    <option value="existing">Already Client</option>
+                  </select>
+                </div>
+                <!-- New Client Section -->
+                <div id="new-client-fields">
+                  <div class="mb-3">
+                    <label for="first-name" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="first-name" name="first_name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="last-name" class="form-label">Last name</label>
+                    <input type="text" class="form-control" id="last-name" name="last_name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" id="phone" name="phone" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="cin" class="form-label">CIN</label>
+                    <input type="file" class="form-control" id="cin" name="cin" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="permis" class="form-label">Permis</label>
+                    <input type="file" class="form-control" id="permis" name="permis" required>
+                  </div>
+                </div>
+
+                  <!-- Existing Client Select -->
+                   <div class="mb-3">
+                  <div id="existing-client-select" style="display: none;">
+                    <label for="client-select" class="form-label">Choose Client</label>
+                    <select class="form-select" id="client-select" name="client_id">
+                      <option value="">-- Select a client --</option>
+                      {% for client in clients %}
+                        <option value="{{ client.id }}">{{ client.first_name }} {{ client.last_name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </fieldset>
+            </form>
+          </div>
+        </div>     
+      </div>     
+    </div>
+
+    <script>
+      document.getElementById('brand-select').addEventListener('change', function() {
+        const brandId = this.value;
+        const modelSelect = document.getElementById('model-select');
+        modelSelect.disabled = true;
+        modelSelect.innerHTML = '<option>Loading...</option>';
+      
+        fetch(`/get-models/${brandId}/`)
+          .then(response => response.json())
+          .then(data => {
+            modelSelect.innerHTML = '<option value="">Select model</option>';
+            data.models.forEach(model => {
+              modelSelect.innerHTML += `<option value="${model.id}">${model.model_name}</option>`;
+            });
+            modelSelect.disabled = false;
+          });
+      });
+      </script>
+      <script>
+        document.getElementById('model-select').addEventListener('change', function() {
+          const modelId = this.value;
+          const plateSelect = document.getElementById('plate-select');
+          plateSelect.disabled = true;
+          plateSelect.innerHTML = '<option>Loading...</option>';
+        
+          fetch(`/get-plate/${modelId}/`)
+            .then(response => response.json())
+            .then(data => {
+              plateSelect.innerHTML = '<option value="">Select plate number</option>';
+              data.available_cars.forEach(car => {
+                plateSelect.innerHTML += `<option value="${car.id}">${car.plate_number}</option>`;
+              });
+              plateSelect.disabled = false;
+            });
+        });
+        </script>
+      <script>
+        const clientType = document.getElementById("client-type");
+        const newFields = document.getElementById("new-client-fields");
+        const existingSelect = document.getElementById("existing-client-select");
+        const firstName = document.getElementById("first-name");
+        const lastName = document.getElementById("last-name");
+        const phone = document.getElementById("phone");
+        const cin = document.getElementById("cin");
+        const permis = document.getElementById("permis");
+        const clientSelect = document.getElementById("client-select");
+
+
+
+      
+        clientType.addEventListener("change", function () {
+          if (this.value === "existing") {
+            newFields.style.display = "none";
+            existingSelect.style.display = "block";
+            firstName.removeAttribute("required");
+            lastName.removeAttribute("required");
+            phone.removeAttribute("required");
+            cin.removeAttribute("required");
+            permis.removeAttribute("required");
+
+            clientSelect.setAttribute("required", "required");         
+          } else {
+            newFields.style.display = "block";
+            existingSelect.style.display = "none";
+            //clientSelect.removeAttribute("required");
+            clientSelect.removeAttribute("required");
+          }
+        });
+      </script>
+      <script>
+        $(document).ready(function() { 
+          $('#client-select').select2({
+            placeholder: "Search for a client...",
+            allowClear: true
+          });
+        });
+      </script>
+      
+
+
+{% endblock %}
