@@ -12,6 +12,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
+
+# Run migrations and static files
+RUN python manage.py migrate
+RUN python manage.py collectstatic --noinput
+
 # Copy project files
 COPY . .
 
