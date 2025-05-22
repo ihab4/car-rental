@@ -40,9 +40,9 @@ RUN python manage.py migrate
 RUN python manage.py collectstatic --noinput
 
 # # Expose port (change if needed)
-EXPOSE 8080
+EXPOSE 7070
 
 # Run the app
 # CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
-CMD ["gunicorn", "car_rental.wsgi:application", "--bind", "0.0.0.0:8080"]
+CMD ["gunicorn", "car_rental.wsgi:application", "--bind", "0.0.0.0:7070"]
 
