@@ -44,6 +44,7 @@ var/
 */migrations/*.pyd
 */migrations/*.log
 */migrations/*.sqlite3
+*/migrations/
 
 # Ignore all migration files (optional)
 # */migrations/*.py
