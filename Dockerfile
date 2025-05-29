@@ -13,6 +13,7 @@ COPY . .
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 7070
-CMD ["gunicorn", "car_rental.wsgi:application", "--bind", "0.0.0.0:7070"]
+# CMD ["gunicorn", "car_rental.wsgi:application", "--bind", "0.0.0.0:7070"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:7070"]
 
 
