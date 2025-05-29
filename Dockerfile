@@ -12,8 +12,8 @@ COPY . .
 
 RUN python manage.py collectstatic --noinput
 
-EXPOSE 8080
-CMD ["gunicorn", "car_rental.wsgi:application", "--bind", "0.0.0.0:8080"]
+EXPOSE 7070
+CMD ["gunicorn", "car_rental.wsgi:application", "--bind", "0.0.0.0:7070"]
 
 
 
