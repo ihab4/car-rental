@@ -11,6 +11,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY . .
 
 RUN python manage.py collectstatic --noinput
+RUN python manage.py migrate
 
 EXPOSE 7070
 CMD ["gunicorn", "car_rental.wsgi:application", "--bind", "0.0.0.0:7070"]
